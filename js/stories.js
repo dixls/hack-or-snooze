@@ -71,7 +71,16 @@ function favClickHandler (evt) {
   const storyId = $parent.parent().attr('id')
   currentUser.addFavorite(storyId);
   $parent.toggleClass('hidden')
-  console.log($parent.parent().find(".story-unfav"))
+  $parent.parent().find(".story-unfav").toggleClass('hidden')
+}
+
+function unfavClickHandler (evt) {
+  const $parent = $(evt.target).parent()
+  const storyId = $parent.parent().attr('id')
+  currentUser.removeFavorite(storyId);
+  $parent.toggleClass('hidden')
+  $parent.parent().find(".story-fav").toggleClass('hidden')
 }
 
 $allStoriesList.on("click", ".story-fav", favClickHandler);
+$allStoriesList.on("click", ".story-unfav", unfavClickHandler);
