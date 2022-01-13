@@ -30,9 +30,8 @@ function generateStoryMarkup(story) {
         </a>
         <small class="story-hostname">(${hostName})</small>
         <small class="story-author">by ${story.author}</small>
-        <small class="story-user">posted by ${story.username}</small>
-        <small class="story-fav"><a href="#">add favorite</a></small>
-        <small class="story-unfav hidden"><a href="#">remove favorite</a></small>
+        <small class="story-user">posted by ${story.username} </small>
+        <small class="story-fav"><a href="#">add favorite</a></small><small class="story-unfav hidden"><a href="#">remove favorite</a></small> <small class="delete-btn hidden">delete</small>
       </li>
     `);
 }
@@ -54,6 +53,11 @@ function putStoriesOnPage() {
           $story.find('.story-unfav').toggleClass('hidden');
         }
       }
+      if (currentUser.username == story.username) {
+        $story.find('.delete-btn').toggleClass('hidden');
+      }
+    } else {
+      $story.find('.story-fav').toggleClass('hidden');
     }
     $allStoriesList.append($story);
   }
