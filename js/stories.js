@@ -31,6 +31,8 @@ function generateStoryMarkup(story) {
         <small class="story-hostname">(${hostName})</small>
         <small class="story-author">by ${story.author}</small>
         <small class="story-user">posted by ${story.username}</small>
+        <small class="story-fav"><a href="#">add favorite</a></small>
+        <small class="story-unfav hidden"><a href="#">remove favorite</a></small>
       </li>
     `);
 }
@@ -63,3 +65,13 @@ async function submitStory(evt) {
 }
 
 $storyForm.on("submit", submitStory)
+
+function favClickHandler (evt) {
+  const $parent = $(evt.target).parent()
+  const storyId = $parent.parent().attr('id')
+  currentUser.addFavorite(storyId);
+  $parent.toggleClass('hidden')
+  console.log($parent.parent().find(".story-unfav"))
+}
+
+$allStoriesList.on("click", ".story-fav", favClickHandler);
