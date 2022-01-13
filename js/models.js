@@ -24,7 +24,6 @@ class Story {
   /** Parses hostname out of URL and returns it. */
 
   getHostName() {
-    // UNIMPLEMENTED: complete this function!
     return this.url.split('/')[2];
   }
 }
@@ -83,7 +82,6 @@ class StoryList {
         url: story.url
       }
     })
-    // console.log(response);
     let newStory = new Story(response.data.story)
     return newStory;
   }
@@ -210,7 +208,6 @@ class User {
     const response = await axios.post(`${BASE_URL}/users/${this.username}/favorites/${storyId}`, {
       token: this.loginToken
     })
-    console.log(response)
   }
 
   // unfavorite
@@ -219,6 +216,5 @@ class User {
       token: this.loginToken
     }
     })
-    console.log(response)
   }
 }
