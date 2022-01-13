@@ -212,4 +212,13 @@ class User {
     })
     console.log(response)
   }
+
+  // unfavorite
+  async removeFavorite (storyId) {
+    const response = await axios.delete(`${BASE_URL}/users/${this.username}/favorites/${storyId}`, { params: {
+      token: this.loginToken
+    }
+    })
+    console.log(response)
+  }
 }

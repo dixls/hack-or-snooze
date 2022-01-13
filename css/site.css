@@ -106,6 +106,9 @@ form > hr {
   width: 70px;
 }
 
+.story-input label {
+  width: 70px;
+}
 
 /* responsive queries for tightening things up for mobile. */
 
