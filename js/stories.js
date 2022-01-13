@@ -31,7 +31,7 @@ function generateStoryMarkup(story) {
         <small class="story-hostname">(${hostName})</small>
         <small class="story-author">by ${story.author}</small>
         <small class="story-user">posted by ${story.username} </small>
-        <small class="story-fav"><a href="#">add favorite</a></small><small class="story-unfav hidden"><a href="#">remove favorite</a></small> <small class="delete-btn hidden">delete</small>
+        <small class="story-fav"><a href="#">add favorite</a></small><small class="story-unfav hidden"><a href="#">remove favorite</a></small> <small class="delete-btn hidden"><a href=#>delete</a></small>
       </li>
     `);
 }
@@ -70,13 +70,24 @@ async function submitStory(evt) {
   const author = $("#story-author").val();
   const title = $("#story-title").val();
   const url = $("#story-url").val();
-  if (!author || !title || !url) return;
+  if (!author || !title || !url) return; // if any field is missing, do not submit
+  // submit new story
   const newStory = await storyList.addStory(currentUser, {author, title, url});
-  // console.log(newStory);
+  // refresh story list from server before updating the page
+  storyList = await StoryList.getStories();
   navAllStories();
 }
 
 $storyForm.on("submit", submitStory)
+
+async function deleteStory(evt) {
+  evt.preventDefault();
+  const $thisStory = $(evt.target).parent().parent()
+  const result = await axios.delete(`${BASE_URL}/stories/${$thisStory.attr('id')}`, {params : {token: currentUser.loginToken}})
+  $thisStory.remove();
+  // refresh story list from server after delete
+  storyList = await StoryList.getStories();
+}
 
 function favClickHandler (evt) {
   const $parent = $(evt.target).parent()
@@ -96,3 +107,4 @@ function unfavClickHandler (evt) {
 
 $allStoriesList.on("click", ".story-fav", favClickHandler);
 $allStoriesList.on("click", ".story-unfav", unfavClickHandler);
+$allStoriesList.on("click", ".delete-btn", deleteStory);
